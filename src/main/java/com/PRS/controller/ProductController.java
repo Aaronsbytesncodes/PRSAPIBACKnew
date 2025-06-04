@@ -4,6 +4,8 @@ import com.PRS.DB.ProductRepo;
 import com.PRS.model.Product;
 
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,8 +16,8 @@ import javax.management.relation.RoleInfoNotFoundException;
 @RequiredArgsConstructor 
 @RequestMapping("/api/products")
 public class ProductController {
-
-    private final ProductRepo productRepo;
+@Autowired
+    private  ProductRepo productRepo;
 
     @GetMapping
     public List<Product> getAll() {

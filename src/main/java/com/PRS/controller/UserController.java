@@ -1,10 +1,12 @@
 package com.PRS.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import com.PRS.model.User;
 import com.PRS.DB.UserRepo;
+import com.PRS.Services.LoginRequest;
 
 import lombok.RequiredArgsConstructor;
 
@@ -12,8 +14,8 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
 public class UserController {
-
-    private final UserRepo userRepo;
+@Autowired
+	private  UserRepo userRepo ;
 
     @GetMapping
     public List<User> getAll() {
@@ -54,4 +56,5 @@ public class UserController {
     public void delete(@PathVariable Integer id) {
         userRepo.deleteById(id);
     }
+ 
 }

@@ -4,6 +4,8 @@ import com.PRS.DB.VendorRepo;
 import com.PRS.model.Vendor;
 
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,8 +15,8 @@ import java.util.List;
 @RequestMapping("/api/vendors")
 @RequiredArgsConstructor // injects final vendorRepo
 public class VendorController {
-
-    private final VendorRepo vendorRepo;
+@Autowired
+    private VendorRepo vendorRepo;
 
     @GetMapping
     public List<Vendor> getAll() {

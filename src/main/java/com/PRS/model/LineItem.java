@@ -4,14 +4,37 @@ import java.math.BigDecimal;
 
 import jakarta.persistence.*;
 import lombok.*;
-import com.PRS.model.Request;
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class LineItem {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Integer getID() {
+		return ID;
+	}
+	public void setID(Integer iD) {
+		ID = iD;
+	}
+	public Integer getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
+	}
+	public Product getProduct() {
+		return product;
+	}
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+	public Request getRequest() {
+		return request;
+	}
+	public void setRequest(Request request) {
+		this.request = request;
+	}
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer ID;
 
     @Column(nullable = false)
@@ -24,9 +47,13 @@ public class LineItem {
     @ManyToOne
    @JoinColumn(name = "RequestID", nullable = false)
     private Request request;
+
+	private BigDecimal total;
     
     public BigDecimal getTotal() {
-        return total;
+        return total ;}
+        
+    
 
     
 
