@@ -10,7 +10,7 @@ import com.PRS.model.Request;
 
 public interface RequestRepo extends JpaRepository<Request, Integer> {
     long countByRequestNumberStartingWith(String prefix);
-    @Query("SELECT r FROM Request r WHERE r.status = 'REVIEW' AND r.userId != :userId")
-    List<Request> findRequestsForReview(@Param("userId") Integer userId);}
+    @Query("SELECT r FROM Request r WHERE r.status = 'REVIEW' AND r.user.id != :userId")
+    List<Request> findRequestsForReview(@Param("userId") Integer userId);
 
 
