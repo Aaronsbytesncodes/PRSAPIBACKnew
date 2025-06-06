@@ -122,4 +122,15 @@ public class Request {
     @OneToMany(mappedBy = "request", cascade = CascadeType.ALL, orphanRemoval = true)
     @Singular
     private List<LineItem> lineItems;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+	private User user;
+    public User getUser() {
+    return this.user();
+}
+
+public void setUser(User user) {
+    this.user = user;
+}
 }
