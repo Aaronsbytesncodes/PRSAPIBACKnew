@@ -6,9 +6,9 @@ import lombok.Data;
 public class LoginRequest {
     private String Username;
     private String password;
-	public Object getUsername() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getUsername() {
+		
+		return Username;
 	}
 	public String getPassword() {
 		return password;

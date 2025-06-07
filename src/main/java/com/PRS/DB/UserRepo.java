@@ -9,6 +9,6 @@ import com.PRS.model.User;
 
 public interface UserRepo extends JpaRepository<User, Integer>{
 
-	Optional<User> findByUsername(Object username);
+	Optional<User> findByUsername(String username);
 
 }
