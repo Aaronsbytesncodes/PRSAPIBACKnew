@@ -1,14 +1,12 @@
 package com.PRS.model;
 
-import java.math.BigDecimal;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.*;
-import lombok.*;
+
 @Entity
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+
 public class LineItem {
     public Integer getID() {
 		return ID;
@@ -39,29 +37,18 @@ public class LineItem {
 
     @Column(nullable = false)
     private Integer quantity;
+ // In LineItem.java
+    @ManyToOne
+    @JoinColumn(name = "RequestId", referencedColumnName = "id", nullable = false)
+    @JsonBackReference
+    private Request request;
+
+ 
+
 
     @ManyToOne
     @JoinColumn(name = "ProductID", nullable = false)
+    @JsonBackReference
     private Product product;
-
-    @ManyToOne
-   @JoinColumn(name = "RequestID", nullable = false)
-    private Request request;
-
-	private BigDecimal total;
-    
-    public BigDecimal getTotal() {
-        return total ;}
-        
-    
-
-    
-
-
-public void recalculateTotal() {
-   if (product == null || quantity == null) {
-        throw new IllegalArgumentException("Product or quantity is missing");
-    }
-    this.total = product.getPrice().multiply(BigDecimal.valueOf(quantity));
 }
-}
+ 

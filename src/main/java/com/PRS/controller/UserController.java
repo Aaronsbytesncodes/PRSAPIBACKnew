@@ -8,16 +8,14 @@ import com.PRS.model.User;
 import com.PRS.DB.UserRepo;
 import com.PRS.Services.LoginRequest;
 
-import lombok.RequiredArgsConstructor;
-
 @RestController
 @RequestMapping("/api/users")
-@RequiredArgsConstructor
+
 public class UserController {
 @Autowired
 	private  UserRepo userRepo ;
 
-    @GetMapping
+    @GetMapping("/")
     public List<User> getAll() {
         return userRepo.findAll();
     }

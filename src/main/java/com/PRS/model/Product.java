@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import com.PRS.model.Product;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 
@@ -105,5 +106,6 @@ public class Product {
 
     @ManyToOne
     @JoinColumn(name = "VendorId", nullable = false)
+    @JsonManagedReference
     private Vendor vendor;
 }

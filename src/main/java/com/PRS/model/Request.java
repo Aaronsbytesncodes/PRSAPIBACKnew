@@ -1,23 +1,25 @@
 package com.PRS.model;
 
 import jakarta.persistence.*;
-import lombok.*;
+
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Entity
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+
+
 public class Request {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
     private String requestNumber;
-    
+
+	
+   
 
     public Integer getId() {
 		return id;
@@ -118,13 +120,16 @@ public class Request {
 
     @Column(nullable = false)
     private BigDecimal total;
-
     @OneToMany(mappedBy = "request", cascade = CascadeType.ALL, orphanRemoval = true)
-    @Singular
+    @JsonManagedReference
     private List<LineItem> lineItems;
+   
+    
+   
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "UserId", referencedColumnName = "Id", nullable = false)
+    @JsonBackReference
 	private User user;
     public User getUser() {
     return this.user;
@@ -133,4 +138,23 @@ public class Request {
 public void setUser(User user) {
     this.user = user;
 }
+
+
+
+public void recalculateTotal() {
+    if (lineItems == null || lineItems.isEmpty()) {
+        this.total = BigDecimal.ZERO;
+        return;
+    }
+
+    this.total = lineItems.stream()
+        .map(li -> {
+            if (li.getProduct() == null || li.getQuantity() == null) {
+                throw new IllegalArgumentException("LineItem product or quantity is missing");
+            }
+            return li.getProduct().getPrice().multiply(BigDecimal.valueOf(li.getQuantity()));
+        })
+        .reduce(BigDecimal.ZERO, BigDecimal::add);
+}
+
 }
