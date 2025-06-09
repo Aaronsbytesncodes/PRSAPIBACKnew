@@ -8,7 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
 	
 @Entity
 
@@ -79,7 +79,7 @@ public class User {
 	public void setAdmin(Boolean admin) {
 		this.admin = admin;
 	}
-	@OneToMany(mappedBy = "user")
+	@JoinColumn(name = "user")
 	@JsonManagedReference
 	private List<Request> requests;
 }

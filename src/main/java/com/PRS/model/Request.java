@@ -68,14 +68,17 @@ public class Request {
 	public void setDateNeeded(LocalDate dateNeeded) {
 		this.dateNeeded = dateNeeded;
 	}
+	
+	
 
 	public String getDeliveryMode() {
-		return deliveryMode;
+	    return deliveryMode;
 	}
 
 	public void setDeliveryMode(String deliveryMode) {
-		this.deliveryMode = deliveryMode;
+	    this.deliveryMode = deliveryMode;
 	}
+
 
 	public String getStatus() {
 		return status;
@@ -102,6 +105,18 @@ public class Request {
 	}
 
 	private LocalDate submittedDate;
+	
+	private String reasonForRejection;
+
+	
+	public String getReasonForRejection() {
+	    return reasonForRejection;
+	}
+
+	public void setReasonForRejection(String reasonForRejection) {
+	    this.reasonForRejection = reasonForRejection;
+	}
+
 
     @Column(nullable = false, length = 255)
     private String description;
@@ -120,14 +135,14 @@ public class Request {
 
     @Column(nullable = false)
     private BigDecimal total;
-    @OneToMany(mappedBy = "request", cascade = CascadeType.ALL, orphanRemoval = true)
+   @JoinColumn(name = "request", referencedColumnName = "id", nullable = false)
     @JsonManagedReference
     private List<LineItem> lineItems;
    
     
    
 
-    @ManyToOne
+    
     @JoinColumn(name = "UserId", referencedColumnName = "Id", nullable = false)
     @JsonBackReference
 	private User user;

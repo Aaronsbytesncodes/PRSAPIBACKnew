@@ -105,7 +105,7 @@ public class Product {
     private String photoPath;
 
     @ManyToOne
-    @JoinColumn(name = "VendorId", nullable = false)
+    @JoinColumn(name = "VendorId")
     @JsonManagedReference
     private Vendor vendor;
 }

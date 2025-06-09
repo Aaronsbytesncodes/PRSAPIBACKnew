@@ -1,8 +1,6 @@
 package com.PRS.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import jakarta.persistence.*;
 
 @Entity
@@ -46,7 +44,7 @@ public class LineItem {
  
 
 
-    @ManyToOne
+    
     @JoinColumn(name = "ProductID", nullable = false)
     @JsonBackReference
     private Product product;
