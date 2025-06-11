@@ -2,29 +2,34 @@ package com.PRS.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 	
 @Entity
-
 public class User {
     @Id
-     @GeneratedValue(strategy = GenerationType.IDENTITY)
-   private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private String username;
     private String password;
-    
-	private String firstName;
+    private String firstName;
     private String lastName;
     private String phoneNumber;
     private String email;
     private Boolean reviewer;
     private Boolean admin;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    
+    private List<Request> requests;
     public Integer getId() {
 		return id;
 	}
@@ -79,9 +84,7 @@ public class User {
 	public void setAdmin(Boolean admin) {
 		this.admin = admin;
 	}
-	@JoinColumn(name = "user")
-	@JsonManagedReference
-	private List<Request> requests;
+	
 }
 	
 	

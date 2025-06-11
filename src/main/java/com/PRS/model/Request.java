@@ -135,16 +135,17 @@ public class Request {
 
     @Column(nullable = false)
     private BigDecimal total;
-   @JoinColumn(name = "request", referencedColumnName = "id", nullable = false)
-    @JsonManagedReference
+    
+    @OneToMany (mappedBy = "request", cascade = CascadeType.ALL, orphanRemoval = true)
+    
     private List<LineItem> lineItems;
-   
-    
-   
 
-    
-    @JoinColumn(name = "UserId", referencedColumnName = "Id", nullable = false)
+   
+   
     @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "UserID", referencedColumnName = "Id", nullable = false)
+
 	private User user;
     public User getUser() {
     return this.user;
@@ -153,23 +154,6 @@ public class Request {
 public void setUser(User user) {
     this.user = user;
 }
-
-
-
-public void recalculateTotal() {
-    if (lineItems == null || lineItems.isEmpty()) {
-        this.total = BigDecimal.ZERO;
-        return;
-    }
-
-    this.total = lineItems.stream()
-        .map(li -> {
-            if (li.getProduct() == null || li.getQuantity() == null) {
-                throw new IllegalArgumentException("LineItem product or quantity is missing");
-            }
-            return li.getProduct().getPrice().multiply(BigDecimal.valueOf(li.getQuantity()));
-        })
-        .reduce(BigDecimal.ZERO, BigDecimal::add);
 }
 
-}
+

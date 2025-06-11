@@ -1,9 +1,13 @@
 package com.PRS.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.*;
 
 @Entity
+
 
 public class LineItem {
     public Integer getID() {
@@ -35,18 +39,14 @@ public class LineItem {
 
     @Column(nullable = false)
     private Integer quantity;
- // In LineItem.java
-    @ManyToOne
-    @JoinColumn(name = "RequestId", referencedColumnName = "id", nullable = false)
-    @JsonBackReference
-    private Request request;
-
- 
-
-
     
-    @JoinColumn(name = "ProductID", nullable = false)
-    @JsonBackReference
-    private Product product;
+	@ManyToOne(optional = false)
+	@JsonIgnore
+	@JoinColumn(name = "productid")
+	private Product product;
+	
+	@ManyToOne(optional = false)
+	@JsonIgnore
+	@JoinColumn(name = "requestid")
+	private Request request;
 }
- 

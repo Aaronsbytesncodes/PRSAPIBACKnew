@@ -1,14 +1,12 @@
 package com.PRS.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.*;
-import lombok.*;
 
 @Entity
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+
 public class Vendor {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -79,8 +77,19 @@ public class Vendor {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	@JsonBackReference
+	@ManyToOne
+	@JoinColumn(name = "ID", nullable = false)
+	private User user;
+	
 
-   // @OneToMany(mappedBy = "vendor", cascade = CascadeType.ALL, orphanRemoval = true)
-   // @Singular
-   // private List<Product> products;
+	// --- Getters and Setters ---
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 }
