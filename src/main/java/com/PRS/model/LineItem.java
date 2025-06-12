@@ -1,9 +1,5 @@
 package com.PRS.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import jakarta.persistence.*;
 
 @Entity
@@ -40,13 +36,11 @@ public class LineItem {
     @Column(nullable = false)
     private Integer quantity;
     
-	@ManyToOne(optional = false)
-	@JsonIgnore
+	@ManyToOne
 	@JoinColumn(name = "productid")
 	private Product product;
 	
-	@ManyToOne(optional = false)
-	@JsonIgnore
+	@ManyToOne
 	@JoinColumn(name = "requestid")
 	private Request request;
 }

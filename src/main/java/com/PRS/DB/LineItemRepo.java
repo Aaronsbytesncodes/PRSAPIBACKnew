@@ -6,8 +6,6 @@ package com.PRS.DB;
 	import com.PRS.model.LineItem;
 
 	public interface LineItemRepo extends JpaRepository<LineItem, Integer> {
-	    static List<LineItem> findByRequestId(Integer requestId) {
-		
-			return null;
-		}
+	    List<LineItem> findByRequestId(Integer requestId);
 	}
+	

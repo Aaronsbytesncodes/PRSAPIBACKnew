@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.PRS.DB.RequestRepo;
 import com.PRS.Services.RequestService;
-import com.PRS.model.LineItem;
 import com.PRS.model.Request;
 
 @RestController
@@ -52,13 +51,9 @@ public class RequestController {
         request.setSubmittedDate(null);
         request.setTotal(BigDecimal.ZERO);
 
-        // Link line items if provided
-        if (request.getLineItems() != null) {
-            for (LineItem li : request.getLineItems()) {
-                li.setRequest(request);
-            }
-        }
-
+        
+    
+    
         // Save and assign generated request number
         return requestService.create(request);
     }
@@ -124,3 +119,4 @@ public class RequestController {
         }).orElse(ResponseEntity.notFound().build());
     }
 }
+

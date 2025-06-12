@@ -22,7 +22,7 @@ public class LineItemService {
     }
 
     public List<LineItem> getLineItemsForRequest(Integer requestId) {
-        return LineItemRepo.findByRequestId(requestId);
+        return lineItemRepo.findByRequestId(requestId);
     }
 
     public Optional<LineItem> getLineItemById(Integer id) {
@@ -51,7 +51,7 @@ public class LineItemService {
 
     public void recalcRequestTotal(Integer requestId) {
         requestRepo.findById(requestId).ifPresent(request -> {
-            BigDecimal total = LineItemRepo.findByRequestId(requestId).stream()
+            BigDecimal total = lineItemRepo.findByRequestId(requestId).stream()
                     .map(li -> li.getProduct().getPrice().multiply(BigDecimal.valueOf(li.getQuantity())))
                     .reduce(BigDecimal.ZERO, BigDecimal::add);
             request.setTotal(total);
