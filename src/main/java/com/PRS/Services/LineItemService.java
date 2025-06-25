@@ -7,19 +7,25 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.PRS.DB.LineItemRepo;
+import com.PRS.DB.ProductRepo;
 import com.PRS.DB.RequestRepo;
 import com.PRS.model.LineItem;
 
 @Service
+
 public class LineItemService {
 
     private final LineItemRepo lineItemRepo;
     private final RequestRepo requestRepo;
+    private final ProductRepo productRepo;
 
-    public LineItemService(LineItemRepo lineItemRepo, RequestRepo requestRepo) {
+    public LineItemService(LineItemRepo lineItemRepo, RequestRepo requestRepo, ProductRepo productRepo) {
         this.lineItemRepo = lineItemRepo;
         this.requestRepo = requestRepo;
+        this.productRepo = productRepo;
+	
     }
+    
 
     public List<LineItem> getLineItemsForRequest(Integer requestId) {
         return lineItemRepo.findByRequestId(requestId);
@@ -30,9 +36,25 @@ public class LineItemService {
     }
 
     public LineItem addLineItem(LineItem lineItem) {
+        // Load Request entity
+        var request = requestRepo.findById(lineItem.getRequest().getId())
+            .orElseThrow(() -> new RuntimeException("Request not found"));
+
+        // Load Product entity
+        var product = productRepo.findById(lineItem.getProduct().getId())
+            .orElseThrow(() -> new RuntimeException("Product not found"));
+
+        // Set full entities on lineItem
+        lineItem.setRequest(request);
+        lineItem.setProduct(product);
+
+        // Save now with fully attached entities
         LineItem saved = lineItemRepo.save(lineItem);
-        recalcRequestTotal(lineItem.getRequest().getId());
+
+        recalcRequestTotal(request.getId());
+
         return saved;
+    
     }
 
     public void updateLineItem(LineItem lineItem) {

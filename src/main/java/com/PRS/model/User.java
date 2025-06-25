@@ -26,7 +26,7 @@ public class User {
     private Boolean admin;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
+   
     
     private List<Request> requests;
     public Integer getId() {

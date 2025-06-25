@@ -1,5 +1,7 @@
 package com.PRS.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -35,6 +37,7 @@ public class LineItem {
 
     @Column(nullable = false)
     private Integer quantity;
+    
     
 	@ManyToOne
 	@JoinColumn(name = "productid")

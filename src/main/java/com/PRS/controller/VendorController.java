@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/vendors")
-@RequiredArgsConstructor // injects final vendorRepo
+
 public class VendorController {
 @Autowired
     private VendorRepo vendorRepo;
@@ -32,6 +32,9 @@ public class VendorController {
 
     @PostMapping
     public Vendor create(@RequestBody Vendor vendor) {
+        if (vendor.getUser() == null || vendor.getUser().getId() == null) {
+            throw new IllegalArgumentException("Vendor must contain a valid user ID.");
+        }
         return vendorRepo.save(vendor);
     }
 

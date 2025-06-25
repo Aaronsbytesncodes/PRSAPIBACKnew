@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 
 
@@ -134,14 +135,14 @@ public class Request {
 
     @Column(nullable = false)
     private BigDecimal total;
-    
+    @JsonIgnore
     @OneToMany (mappedBy = "request", cascade = CascadeType.ALL, orphanRemoval = true)
-    
+   
     private List<LineItem> lineItems;
 
    
    
-    @JsonBackReference
+    
     @ManyToOne
     @JoinColumn(name = "UserID", referencedColumnName = "Id", nullable = false)
 
